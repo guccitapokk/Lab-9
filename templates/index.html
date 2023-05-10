@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+</head>
+<body bgcolor="#BBB8FF">
+<h2>Books</h2>
+<form method="post" action="/add_book">
+    Author: <input type="text" name="author"><br/>
+    Title: <input type="text" name="title"><br/>
+    <button type="submit">Add read book</button>
+</form>
+
+<h3>Already read books</h3>
+{% for book in books %}
+<div><i>{{ book.author }} — <b>{{book.name}}</b></i></div>
+{% endfor %}
+<a href="/delete_all"><button>Clear</button></a>
+
+</body>
+</html>

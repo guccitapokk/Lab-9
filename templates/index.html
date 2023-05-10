@@ -4,19 +4,22 @@
     <meta charset="UTF-8">
     <title>Main page</title>
 </head>
-<body bgcolor="#BBB8FF">
-<h2>Books</h2>
-<form method="post" action="/add_book">
-    Author: <input type="text" name="author"><br/>
-    Title: <input type="text" name="title"><br/>
-    <button type="submit">Add read book</button>
+<body>
+<h2>Messages</h2>
+<form method="post" action="/add_message">
+    <input type="text" name="text">
+    <input type="text" name="tag">
+    <button type="submit">Add post</button>
 </form>
 
-<h3>Already read books</h3>
-{% for book in books %}
-<div><i>{{ book.author }} — <b>{{book.name}}</b></i></div>
+<h3>Messages feed</h3>
+{% for message in messages %}
+<div>{{ message.text }}
+    {% for tag in message.tags %}
+        <b>#{{ tag.text }}</b>
+    {% endfor %}
+</div>
 {% endfor %}
-<a href="/delete_all"><button>Clear</button></a>
 
 </body>
 </html>

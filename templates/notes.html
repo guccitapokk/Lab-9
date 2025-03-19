@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заметки</title>
+    <style>
+        body {
+            background-color: #87CEFA;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .note {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .important {
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>Мои Заметки</h1>
+    <form method="POST">
+        <input type="text" name="note_text" placeholder="Введите текст заметки" required>
+        <label>
+            <input type="checkbox" name="important"> Важная заметка
+        </label>
+        <button type="submit">Добавить заметку</button>
+    </form>
+
+    <button id="clearButton">Очистить заметки</button>
+
+    <div id="notesContainer">
+        {% for note in notes %}
+            <div class="note {% if note.important %}important{% endif %}">
+                {{ note.text }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        document.getElementById('clearButton').addEventListener('click', function() {
+            if (confirm('Вы уверены, что хотите очистить все заметки?')) {
+                // Отправляем запрос на сервер для очистки заметок
+                fetch('/clear_notes', { method: 'POST' })
+                    .then(response => {
+                        if (response.ok) {
+                            // Если очистка прошла успешно, обновляем страницу
+                            location.reload();
+                        } else {
+                            alert('Ошибка при очистке заметок.');
+                        }
+                    });
+            }
+        });
+    </script>
+</body>
+</html>
